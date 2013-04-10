@@ -1,0 +1,10 @@
+AN utility to sort and save recovered files from disk recovery.
+
+Usage : 
+
+on Mac and Linux : 
+ $ runme/util
+
+ or on windows:
+ python runme/util
+

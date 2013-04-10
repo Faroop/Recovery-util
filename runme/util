@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import os
+import time
+import glob
+import re
+import shutil
+
+#t_format = "%Y%m%d"
+#file = "a"
+#time.strftime(t_format,time.strptime(time.ctime(os.path.getctime(file))))
+#
+#re.search("jpeg\s*[0-9]*\s*$","jpeg21 ").group() #re.I required ??
+#from_folder
+#to_folder
+
+t_format = "%Y%m%d"
+from_folder = "../recovered"
+to_folder = "../mydir"
+types = ["JPEG","PNG","ICO"]
+all_subdirs = [os.path.join(from_folder,d) for d in os.listdir(from_folder) if os.path.isdir(os.path.join(from_folder,d))]
+
+for type in types:
+	for dir in all_subdirs:
+		print dir
+		search_f = re.search(type+"\s*[0-9]*\s*$",dir,re.I)
+		if search_f != None:
+			fr_f = os.path.join(from_folder,dir)
+			for file in glob.glob(os.path.join(fr_f,"*.*")):
+				sm_f = time.strftime(t_format,time.strptime(time.ctime(os.path.getmtime(file))))
+				print sm_f
+				if not os.path.isdir(os.path.join(to_folder,sm_f)):
+					os.makedirs(os.path.join(to_folder,sm_f))
+				shutil.copyfile(file,os.path.join(to_folder,sm_f,os.path.basename(file)))
+
